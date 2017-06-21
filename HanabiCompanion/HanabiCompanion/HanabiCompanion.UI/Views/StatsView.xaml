@@ -1,0 +1,105 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="HanabiCompanion.UI.Views.StatsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar x:Name="bottomCommandBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+            <AppBarButton x:Name="refreshButton" Icon="Refresh" Label="Restore" Command="{Binding restoreCommand}" />
+            <AppBarButton x:Name="backupButton" Icon="Save" Label="Backup" Command="{Binding backupCommand}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <StackPanel>
+        <CommandBar x:Name="topCommandBar" Style="{StaticResource TopCommandBarStyle}">
+            <CommandBar.Content>
+                <TextBlock Text="Stats" Style="{StaticResource TitleTextStyle}"/>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <Grid x:Name="overallStats" Margin="0,12,0,0" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Total Games:" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Most Wins:" Grid.Column="0" Grid.Row="1" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Most Losses:" Grid.Column="0" Grid.Row="2" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Best Score:" Grid.Column="0" Grid.Row="3" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Worst Score:" Grid.Column="0" Grid.Row="4" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="{Binding totalGames}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="0"/>
+            <TextBlock Grid.Column="2" Grid.Row="1" TextWrapping="Wrap">
+                <Run Text="{Binding overallStats.mostWins}" FontSize="20" FontWeight="Bold"/>
+                <Run Text="{Binding overallStats.mostWinsPlayers}" FontSize="16"/>
+            </TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="2" TextWrapping="Wrap">
+                <Run Text="{Binding overallStats.mostLoses}" FontSize="20" FontWeight="Bold" />
+                <Run Text="{Binding overallStats.mostLosesPlayers}" FontSize="16"/>
+            </TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="3" TextWrapping="Wrap">
+                <Run Text="{Binding overallStats.bestScore}" FontSize="20" FontWeight="Bold" />
+                <Run Text="{Binding overallStats.bestScorePlayers}" FontSize="16"/>
+            </TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="4" TextWrapping="Wrap">
+                <Run Text="{Binding overallStats.worstScore}" FontSize="20" FontWeight="Bold" />
+                <Run Text="{Binding overallStats.worstScorePlayers}" FontSize="16"/>
+            </TextBlock>
+        </Grid>
+
+        <Grid x:Name="headers" Margin="8,24,8,0" Padding="4,0,4,4" Background="{StaticResource GreyerPrimaryColourBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Stats per player" Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="0" Style="{StaticResource ShadowTextStyle}" FontSize="16" Margin="0,4,0,4"/>
+            <TextBlock Text="Player" Grid.Column="0" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Left"/>
+            <TextBlock Text="Played" Grid.Column="1" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}"/>
+            <TextBlock Text="Won" Grid.Column="2" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}"/>
+            <TextBlock Text="Lost" Grid.Column="3" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}"/>
+            <TextBlock Text="Win %" Grid.Column="4" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}"/>
+            <TextBlock Text="Average" Grid.Column="5" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" Padding="0,0,12,0"/>
+        </Grid>
+
+        <ScrollViewer Margin="8,0,8,8" Padding="4,0,16,0">
+            <ListView ItemsSource="{Binding playerStats}" ItemContainerStyle="{StaticResource NoBorderListViewStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding DataContext.navigateToPlayerStatCommand, ElementName=pageRoot}" CommandParameter="{Binding}" Template="{StaticResource StatsButton}" HorizontalAlignment="Stretch"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        <Grid x:Name="busyBackground" Background="{StaticResource PrimaryColourBrush}" Opacity="0.9" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="2" Foreground="White" IsIndeterminate="True" />
+            <TextBlock x:Name="backupText" Grid.Row="3" Text="Backing up your stats..." Style="{StaticResource TextStyle}" Foreground="White"/>
+            <TextBlock x:Name="restoreText" Grid.Row="3" Text="Restoring your stats..." Style="{StaticResource TextStyle}" Foreground="White"/>
+        </Grid>
+    </StackPanel>
+</Page>

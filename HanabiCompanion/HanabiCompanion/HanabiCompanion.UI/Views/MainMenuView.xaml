@@ -1,0 +1,48 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="HanabiCompanion.UI.Views.MainMenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <RelativePanel>
+        <Image RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True"
+               Height="300" Opacity="0.75"
+               Source="/Assets/Logos/Logo.png" RenderTransformOrigin="0.5,0.5" Margin="62,66,-62,-66">
+            <Image.RenderTransform>
+                <CompositeTransform Rotation="-35"/>
+            </Image.RenderTransform>
+        </Image>
+
+        <Grid RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <CommandBar Grid.Row="0" Style="{StaticResource TopCommandBarStyle}">
+                <CommandBar.Content>
+                    <TextBlock Text="Hanabi Companion" Style="{StaticResource TitleTextStyle}"/>
+                </CommandBar.Content>
+            </CommandBar>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
+                      Grid.Row="1">
+                <ListView ItemsSource="{Binding menuItems}" Margin="0,4,0,0">
+                    <ListView.ItemContainerStyle>
+                        <StaticResource ResourceKey="NoBorderListViewStyle"/>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.navigateCommand, ElementName=pageRoot}" 
+                                CommandParameter="{Binding}"
+                                Style="{StaticResource MenuButtonStyle}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+    </RelativePanel>
+</Page>

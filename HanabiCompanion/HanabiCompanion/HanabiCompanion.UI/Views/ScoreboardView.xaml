@@ -1,0 +1,75 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="HanabiCompanion.UI.Views.ScoreboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Cancel" Label="Delete Game" Command="{Binding cancelGameCommand}"/>
+            <AppBarButton Icon="Accept" Label="Finish Game" Command="{Binding finishGameCommand}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0" Style="{StaticResource TopCommandBarStyle}">
+            <CommandBar.Content>
+                <TextBlock Style="{StaticResource TitleTextStyle}">
+                    <Run Text="Hanabi"/>
+                </TextBlock>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ListView ItemsSource="{Binding colours}" ItemContainerStyle="{StaticResource NoBorderListViewStyle}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Height="32" Opacity="0.75" Source="{Binding image}" Margin="24,0,8,0"/>
+                                <TextBlock Text="{Binding name}" Style="{StaticResource TitleTextStyle}" TextAlignment="Center" FontSize="48" Margin="0,0,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Content="-" CommandParameter="{Binding}" Command="{Binding DataContext.minusCommand, ElementName=pageRoot}" Style="{StaticResource OptionsButton}"/>
+                                <TextBlock Text="{Binding score}" HorizontalAlignment="Center" FontSize="40" Margin="16,0,16,0" TextAlignment="Center"/>
+                                <Button Content="+" CommandParameter="{Binding}" Command="{Binding DataContext.plusCommand, ElementName=pageRoot}" Style="{StaticResource OptionsButton}"/>
+                            </StackPanel>
+                            <Line Grid.Row="1" Grid.ColumnSpan="2" X1="1" X2="250" HorizontalAlignment="Center" Stroke="{StaticResource PrimaryColourBrush}" StrokeThickness="3" Margin="0,8,0,8"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ToggleButton x:Name="firstBomb" Grid.Column="0" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=firstBomb}" Style="{StaticResource BombButtonStyle}"/>
+            <ToggleButton x:Name="secondBomb" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=secondBomb}" Style="{StaticResource BombButtonStyle}"/>
+            <ToggleButton x:Name="thirdBomb" Grid.Column="2" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=thirdBomb}" Style="{StaticResource BombButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Page>
