@@ -27,7 +27,6 @@ namespace HanabiCompanion.UI.Views
             }
 
             _dialogService = new DialogService();
-            DataContext = new ScoreboardViewModel(new List<Player>());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

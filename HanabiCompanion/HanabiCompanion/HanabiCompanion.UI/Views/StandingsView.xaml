@@ -2,12 +2,68 @@
     x:Class="HanabiCompanion.UI.Views.StandingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:HanabiCompanion.UI.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel>
+        <CommandBar x:Name="topCommandBar" Style="{StaticResource TopCommandBarStyle}"
+                    RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <CommandBar.Content>
+                <TextBlock Text="Final Score" Style="{StaticResource TitleTextStyle}"/>
+            </CommandBar.Content>
+        </CommandBar>
 
-    </Grid>
+        <TextBlock x:Name="rating" 
+                   RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="topCommandBar">
+            <Run Text="{Binding rating}"/>
+            <Run Text="{Binding livesLost}"/>
+        </TextBlock>
+
+        <ScrollViewer x:Name="scrollViewer" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="rating" RelativePanel.Above="bottomCommandBar">
+            <ListView x:Name="playersList" ItemsSource="{Binding players}">
+                <ListView.ItemContainerStyle>
+                    <StaticResource ResourceKey="NoBorderListViewStyle"/>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="8,12,12,0" Padding="0,2,0,12" BorderThickness="0,0,0,3" BorderBrush="{StaticResource PrimaryColourBrush}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Text="{Binding name, Mode=TwoWay}" Style="{StaticResource TextStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+  
+                            <ListView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding achievements}" Margin="0,8,0,0">
+                                <ListView.ItemContainerStyle>
+                                    <StaticResource ResourceKey="NoBorderListViewStyle"/>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Gray" BorderThickness="0,1,0,0" Margin="24,0,24,0">
+                                            <Grid VerticalAlignment="Center" Margin="24,0,24,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="{Binding image}" Height="20"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding title}" Style="{StaticResource TableHeaderTextStyle}"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        <CommandBar x:Name="bottomCommandBar" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+            <AppBarButton Icon="Accept" Label="Finish" Command="{Binding finishCommand}"/>
+        </CommandBar>
+    </RelativePanel>
 </Page>

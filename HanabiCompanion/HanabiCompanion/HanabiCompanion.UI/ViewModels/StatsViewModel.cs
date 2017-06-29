@@ -118,11 +118,11 @@ namespace HanabiCompanion.UI.ViewModels
 
             if (playerStats.Count > 0)
             {
-                overallStats.mostWins = playerStats.OrderByDescending(p => p.numberOfWins).First().numberOfWins;
-                overallStats.mostWinsPlayers = ConstructListOfPlayers(playerStats.Where(p => p.numberOfWins == overallStats.mostWins).ToList());
+                overallStats.mostPerfectGames = playerStats.OrderByDescending(p => p.perfectGames).First().perfectGames;
+                overallStats.mostPerfectGamesPlayers = overallStats.mostPerfectGames == 0 ? string.Empty : ConstructListOfPlayers(playerStats.Where(p => p.perfectGames == overallStats.mostPerfectGames).ToList());
 
-                overallStats.mostLoses = playerStats.OrderByDescending(p => p.numberOfLoses).First().numberOfLoses;
-                overallStats.mostLosesPlayers = ConstructListOfPlayers(playerStats.Where(p => p.numberOfLoses == overallStats.mostLoses).ToList());
+                overallStats.mostLivesLost = playerStats.OrderByDescending(p => p.livesLost).First().livesLost;
+                overallStats.mostLivesLostPlayers = overallStats.mostLivesLost == 0 ? string.Empty : ConstructListOfPlayers(playerStats.Where(p => p.livesLost == overallStats.mostLivesLost).ToList());
 
                 overallStats.bestScore = playerStats.OrderByDescending(p => p.bestScore).First().bestScore;
                 overallStats.bestScorePlayers = ConstructListOfPlayers(playerStats.Where(p => p.bestScore == overallStats.bestScore).ToList());
@@ -143,6 +143,12 @@ namespace HanabiCompanion.UI.ViewModels
                     playerStats.Add(new PlayerStat
                     {
                         name = player.name,
+                        bestScore = _playerRepo.GetBestScoreById(player.id),
+                        worstScore = _playerRepo.GetWorstScoreById(player.id),
+                        numberOfGames = _playerRepo.GetNumberOfGamesById(player.id),
+                        averageScore = _playerRepo.GetAverageScoreById(player.id),
+                        perfectGames = _playerRepo.GetNumberOfPerfectGames(player.id),
+                        livesLost = _playerRepo.GetNumberOfLivesLost(player.id),
                         achievements = new List<Achievement>(_achievementRepo.GetAchievementsById(player.id))
                     });
                 }
@@ -150,25 +156,11 @@ namespace HanabiCompanion.UI.ViewModels
             catch (SQLiteException)
             {
             }
-
-            foreach (PlayerStat player in playerStats)
-            {
-                if (player.numberOfGames == 0)
-                {
-                    player.winPercentage = 0;
-                }
-                else
-                {
-                    player.winPercentage = Math.Round((Convert.ToDouble(player.numberOfWins) / Convert.ToDouble(player.numberOfGames)) * 100, 0);
-                }
-            }
-
-            playerStats = new ObservableCollection<PlayerStat>(playerStats.OrderByDescending(p => p.winPercentage));
         }
 
         private async void Backup()
         {
-            await _oneDriveService.Backup();
+            await _oneDriveService.BackUp();
         }
 
         private async void Restore()

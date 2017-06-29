@@ -50,9 +50,9 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Button Content="-" CommandParameter="{Binding}" Command="{Binding DataContext.minusCommand, ElementName=pageRoot}" Style="{StaticResource OptionsButton}"/>
+                                <Button Content="-" CommandParameter="{Binding}" Command="{Binding ElementName=pageRoot, Path=DataContext.minusCommand}" Style="{StaticResource OptionsButton}"/>
                                 <TextBlock Text="{Binding score}" HorizontalAlignment="Center" FontSize="40" Margin="16,0,16,0" TextAlignment="Center"/>
-                                <Button Content="+" CommandParameter="{Binding}" Command="{Binding DataContext.plusCommand, ElementName=pageRoot}" Style="{StaticResource OptionsButton}"/>
+                                <Button Content="+" CommandParameter="{Binding}" Command="{Binding ElementName=pageRoot, Path=DataContext.plusCommand}" Style="{StaticResource OptionsButton}"/>
                             </StackPanel>
                             <Line Grid.Row="1" Grid.ColumnSpan="2" X1="1" X2="250" HorizontalAlignment="Center" Stroke="{StaticResource PrimaryColourBrush}" StrokeThickness="3" Margin="0,8,0,8"/>
                         </Grid>

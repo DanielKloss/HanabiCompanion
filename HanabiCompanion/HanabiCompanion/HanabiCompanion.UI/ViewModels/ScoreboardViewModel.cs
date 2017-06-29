@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -64,7 +62,7 @@ namespace HanabiCompanion.UI.ViewModels
             {
                 if (_minusCommand == null)
                 {
-                    _minusCommand = new Command<SuitColour>(MinusScore, suitColour => suitColour.score > 0);
+                    _minusCommand = new Command<SuitColour>(MinusScore, suitColour => suitColour?.score > 0);
                 }
                 return _minusCommand;
             }
@@ -78,7 +76,7 @@ namespace HanabiCompanion.UI.ViewModels
             {
                 if (_plusCommand == null)
                 {
-                    _plusCommand = new Command<SuitColour>(PlusScore, suitColour => suitColour.score < 5);
+                    _plusCommand = new Command<SuitColour>(PlusScore, suitColour => suitColour?.score < 5);
                 }
                 return _plusCommand;
             }
@@ -127,6 +125,12 @@ namespace HanabiCompanion.UI.ViewModels
             set { _cancelGameCommand = value; }
         }
 
+        public void UpdateCommands()
+        {
+            ((Command<SuitColour>)minusCommand).RaiseCanExecuteChanged();
+            ((Command<SuitColour>)plusCommand).RaiseCanExecuteChanged();
+        }
+
         public ScoreboardViewModel(IEnumerable<Player> players)
         {
             _dialogService = new DialogService();
@@ -146,24 +150,30 @@ namespace HanabiCompanion.UI.ViewModels
                 new SuitColour("Blue"),
                 new SuitColour("Green"),
                 new SuitColour("Yellow"),
-                new SuitColour("White"),
+                new SuitColour("White")
             };
 
             if (game.multicolour && !game.multiColourIsWild)
             {
                 colours.Add(new SuitColour("Multicolour"));
             }
+
+            foreach (Player player in game.players)
+            {
+                player.achievements = new ObservableCollection<Achievement>();
+            }
         }
 
         public void MinusScore(SuitColour colour)
         {
             colours[colours.IndexOf(colour)].score--;
+            UpdateCommands();
         }
 
         public void PlusScore(SuitColour colour)
         {
-            colours[colours.IndexOf(colour)].score--;
-            CheckForEndOfGame();
+            colours[colours.IndexOf(colour)].score++;
+            UpdateCommands();
         }
 
         private void toggleLifeLost(bool isChecked)
@@ -176,28 +186,11 @@ namespace HanabiCompanion.UI.ViewModels
             {
                 livesLost++;
             }
-
-            if(CheckForEndOfGame())
-            {
-                SaveGame();
-            }
-        }
-
-        public bool CheckForEndOfGame()
-        {
-            if (livesLost >= 3 || colours.All(c => c.score >= 5))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public async void EndGame()
         {
-            ContentDialogResult result = await _dialogService.ShowContentDialogAsync(new ConfirmDialogViewModel("End Game", "You are about to quit an unfinished game. Are you sure you want to quit the game without logging the stats?"));
+            ContentDialogResult result = await _dialogService.ShowContentDialogAsync(new ConfirmDialogViewModel("End Game", "Are you sure you want to quit the game without logging the stats?"));
 
             if (result == ContentDialogResult.Primary)
             {
@@ -207,22 +200,19 @@ namespace HanabiCompanion.UI.ViewModels
 
         private async void SaveGame()
         {
-            if (!CheckForEndOfGame())
-            {
-                ContentDialogResult result = await _dialogService.ShowContentDialogAsync(new ConfirmDialogViewModel("End Game", "You are about to quit an unfinished game. Are you sure you want to quit the game and log the stats?"));
+            ContentDialogResult result = await _dialogService.ShowContentDialogAsync(new ConfirmDialogViewModel("End Game", "Are you sure you want to quit the game and log the stats?"));
 
-                if (result == ContentDialogResult.Secondary)
-                {
-                    return;
-                }
+            if (result == ContentDialogResult.Secondary)
+            {
+                return;
             }
 
             CalculateScores();
 
             AchievementService achievementService = new AchievementService(game);
 
-            //achievementService.CheckForPersonalScores();
-            //achievementService.CheckForEverScores();
+            achievementService.CheckForPersonalScores();
+            achievementService.CheckForEverScores();
 
             try
             {
@@ -233,10 +223,10 @@ namespace HanabiCompanion.UI.ViewModels
                     _playerGameRepo.AddPlayerGame(player, game);
                 }
 
-                //achievementService.CheckForFirsts();
-                //achievementService.CheckForMileStones();
+                achievementService.CheckForFirsts();
+                achievementService.CheckForMileStones();
 
-                //achievementService.AddAchievements();
+                achievementService.AddAchievements();
 
                 ((App)Application.Current).rootFrame.Navigate(typeof(StandingsView), game);
             }
@@ -250,14 +240,16 @@ namespace HanabiCompanion.UI.ViewModels
         {
             foreach (Player player in game.players)
             {
-                foreach (SuitColour suitColour in colours)
+                if (livesLost == 3)
                 {
-                    player.totalScore += suitColour.score;
+                    player.totalScore = 0;
                 }
-
-                if (game.multiColourIsWild)
+                else
                 {
-                    player.totalScore -= 5;
+                    foreach (SuitColour suitColour in colours)
+                    {
+                        player.totalScore += suitColour.score;
+                    }
                 }
 
                 player.livesLost = livesLost;

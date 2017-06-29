@@ -774,17 +774,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding name}" Grid.Column="0" Style="{StaticResource TableTextStyle}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
                     <TextBlock Text="{Binding numberOfGames}" Grid.Column="1" Style="{StaticResource TableTextStyle}"/>
-                    <TextBlock Text="{Binding numberOfWins}" Grid.Column="2" Style="{StaticResource TableTextStyle}"/>
-                    <TextBlock Text="{Binding numberOfLoses}" Grid.Column="3" Style="{StaticResource TableTextStyle}"/>
-                    <TextBlock Grid.Column="4" Style="{StaticResource TableTextStyle}">
-                            <Run Text="{Binding winPercentage}"/>
-                            <Run Text="%"/>
-                    </TextBlock>
-                    <TextBlock Text="{Binding averageScore}" Grid.Column="5" Style="{StaticResource TableTextStyle}"/>
+                    <TextBlock Text="{Binding bestScore}" Grid.Column="2" Style="{StaticResource TableTextStyle}"/>
+                    <TextBlock Text="{Binding worstScore}" Grid.Column="3" Style="{StaticResource TableTextStyle}"/>
+                    <TextBlock Text="{Binding averageScore}" Grid.Column="4" Style="{StaticResource TableTextStyle}"/>
                 </Grid>
             </Grid>
         </ControlTemplate>

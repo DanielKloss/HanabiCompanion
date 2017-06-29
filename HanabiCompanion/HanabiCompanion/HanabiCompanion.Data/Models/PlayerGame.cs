@@ -39,7 +39,6 @@ namespace HanabiCompanion.Data.Models
         }
 
         private int _totalScore;
-        [Ignore]
         public int totalScore
         {
             get { return _totalScore; }

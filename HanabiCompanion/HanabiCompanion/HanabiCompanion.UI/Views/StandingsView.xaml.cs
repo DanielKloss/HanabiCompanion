@@ -1,30 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using HanabiCompanion.Data.Models;
+using HanabiCompanion.UI.ViewModels;
+using Microsoft.Toolkit.Uwp.UI.Extensions;
+using System;
+using Windows.Foundation.Metadata;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace HanabiCompanion.UI.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class StandingsView : Page
     {
         public StandingsView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {
+                StatusBar.SetIsVisible(this, false);
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            DataContext = new StandingsViewModel((Game)e.Parameter);
+
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.BackRequested += ScoreboardView_BackRequested;
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        private void ScoreboardView_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+
+            ((App)Application.Current).rootFrame.Navigate(typeof(MainMenuView));
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            SystemNavigationManager systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.BackRequested -= ScoreboardView_BackRequested;
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
     }
 }

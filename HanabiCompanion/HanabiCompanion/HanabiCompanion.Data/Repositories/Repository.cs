@@ -11,7 +11,7 @@ namespace HanabiCompanion.Data.Repositories
         {
             get
             {
-                return new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "DatabaseName.sqlite"));
+                return new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), Path.Combine(ApplicationData.Current.LocalFolder.Path, "Hanabi.sql"));
             }
         }
 

@@ -9,10 +9,9 @@ namespace HanabiCompanion.UI.Models
         public int numberOfGames { get; set; }
         public int bestScore { get; set; }
         public int worstScore { get; set; }
-        public int numberOfWins { get; set; }
-        public int numberOfLoses { get; set; }
-        public double winPercentage { get; set; }
-        public int averageScore { get; set; }
+        public int perfectGames { get; set; }
+        public int livesLost { get; set; }
+        public double averageScore { get; set; }
 
         public List<Achievement> achievements { get; set; }
     }

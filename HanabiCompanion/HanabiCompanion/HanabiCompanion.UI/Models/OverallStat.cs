@@ -2,11 +2,11 @@
 {
     public class OverallStat
     {
-        public int mostWins { get; set; }
-        public string mostWinsPlayers { get; set; }
+        public int mostPerfectGames { get; set; }
+        public string mostPerfectGamesPlayers { get; set; }
 
-        public int mostLoses { get; set; }
-        public string mostLosesPlayers { get; set; }
+        public int mostLivesLost { get; set; }
+        public string mostLivesLostPlayers { get; set; }
 
         public int bestScore { get; set; }
         public string bestScorePlayers { get; set; }
