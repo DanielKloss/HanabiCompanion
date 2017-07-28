@@ -8,11 +8,15 @@ using HanabiCompanion.Data.Repositories;
 using HanabiCompanion.UI.Models;
 using HanabiCompanion.UI.Views;
 using Windows.UI.Xaml;
+using MvvmDialogs;
+using System;
+using HanabiCompanion.UI.Dialogs;
 
 namespace HanabiCompanion.UI.ViewModels
 {
     public class StatsViewModel : BaseViewModel
     {
+        private IDialogService _dialogService;
         private GameRepository _gameRepo;
         private PlayerRepository _playerRepo;
         private AchievementRepository _achievementRepo;
@@ -126,8 +130,9 @@ namespace HanabiCompanion.UI.ViewModels
             set { _navigateToPlayerStatCommand = value; }
         }
 
-        public StatsViewModel()
+        public StatsViewModel(DialogService dialogService)
         {
+            _dialogService = dialogService;
             _gameRepo = new GameRepository();
             _playerRepo = new PlayerRepository();
             _achievementRepo = new AchievementRepository();
@@ -194,7 +199,14 @@ namespace HanabiCompanion.UI.ViewModels
             isWorking = true;
             backingUp = true;
 
-            await _oneDriveService.BackUp();
+            try
+            {
+                await _oneDriveService.BackUp();
+            }
+            catch (Exception)
+            {
+                await _dialogService.ShowContentDialogAsync(new MessageDialogViewModel("One Drive Error", "There was an error connecting to your OneDrive, please check your interent connection and try again"));
+            }
 
             isWorking = false;
             backingUp = false;
@@ -205,7 +217,14 @@ namespace HanabiCompanion.UI.ViewModels
             isWorking = true;
             restoring = true;
 
-            await _oneDriveService.Restore();
+            try
+            {
+                await _oneDriveService.Restore();
+            }
+            catch (Exception)
+            {
+                await _dialogService.ShowContentDialogAsync(new MessageDialogViewModel("One Drive Error", "There was an error connecting to your OneDrive, please check your interent connection and try again"));
+            }
 
             isWorking = false;
             restoring = false;

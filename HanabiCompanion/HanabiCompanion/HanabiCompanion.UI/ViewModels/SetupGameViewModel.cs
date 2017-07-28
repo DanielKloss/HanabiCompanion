@@ -1,15 +1,14 @@
-﻿using MvvmDialogs;
+﻿using HanabiCompanion.Data.Models;
+using HanabiCompanion.Data.Repositories;
+using HanabiCompanion.UI.Dialogs;
+using HanabiCompanion.UI.Views;
+using MvvmDialogs;
 using SQLite.Net;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using HanabiCompanion.Data;
-using HanabiCompanion.Data.Models;
-using HanabiCompanion.Data.Repositories;
-using HanabiCompanion.UI.Dialogs;
-using HanabiCompanion.UI.Views;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

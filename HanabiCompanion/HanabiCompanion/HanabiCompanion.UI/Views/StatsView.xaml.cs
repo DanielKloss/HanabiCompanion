@@ -5,6 +5,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using MvvmDialogs;
 
 namespace HanabiCompanion.UI.Views
 {
@@ -21,7 +22,7 @@ namespace HanabiCompanion.UI.Views
                 StatusBar.SetIsVisible(this, false);
             }
 
-            DataContext = new StatsViewModel();
+            DataContext = new StatsViewModel(new DialogService());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
