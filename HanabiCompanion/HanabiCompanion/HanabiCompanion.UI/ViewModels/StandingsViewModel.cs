@@ -8,7 +8,7 @@ namespace HanabiCompanion.UI.ViewModels
 {
     public class StandingsViewModel : BaseViewModel
     {
-        private const string _bombs = "Explosion! you made too many mistakes...";
+        private const string _bombs = "Explosion! You made too many mistakes...";
         private const string _horrible = "Horrible, booed by the crowd...";
         private const string _mediocre = "Mediocre, just a hint of scattered applause...";
         private const string _honorable = "Honourable attempt, but quickly forgotten...";

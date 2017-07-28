@@ -53,7 +53,7 @@ namespace HanabiCompanion.UI
 
                 if (player.livesLost == 0 && playerRepo.GetNumberOfGamesWithNoLivesLost(player.id) == 1)
                 {
-                    player.achievements.Add(new Achievement() { playerId = player.id, title = "No Lives Lost", image = "/Assets/Logo/NoLivesLost.png", dateTime = DateTime.Now });
+                    player.achievements.Add(new Achievement() { playerId = player.id, title = "No Lives Lost", image = "/Assets/Logos/noLivesLost.png", dateTime = DateTime.Now });
                 }
             }
         }

@@ -15,7 +15,7 @@
         <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="12">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
-                    <Image Source="/Assets/Logos/Logo.png" Height="50" Margin="0,0,12,0"/>
+                    <Image Source="/Assets/Colours/Red.png" Height="50" Margin="0,0,12,0"/>
                     <StackPanel>
                         <TextBlock Text="Hanabi Companion" Style="{StaticResource SubTitleTextStyle}"/>
                         <TextBlock Style="{StaticResource TextStyle}" FontSize="14" HorizontalAlignment="Left">

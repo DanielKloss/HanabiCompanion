@@ -1,10 +1,8 @@
 ﻿using SQLite.Net;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using HanabiCompanion.Data;
 using HanabiCompanion.Data.Models;
 using HanabiCompanion.Data.Repositories;
 using HanabiCompanion.UI.Models;
@@ -19,6 +17,39 @@ namespace HanabiCompanion.UI.ViewModels
         private PlayerRepository _playerRepo;
         private AchievementRepository _achievementRepo;
         private OneDriveService _oneDriveService;
+
+        private bool _isWorking;
+        public bool isWorking
+        {
+            get { return _isWorking; }
+            set
+            {
+                _isWorking = value;
+                OnPropertyChanged(nameof(isWorking));
+            }
+        }
+
+        private bool _restoring;
+        public bool restoring
+        {
+            get { return _restoring; }
+            set
+            {
+                _restoring = value;
+                OnPropertyChanged(nameof(restoring));
+            }
+        }
+
+        private bool _backingUp;
+        public bool backingUp
+        {
+            get { return _backingUp; }
+            set
+            {
+                _backingUp = value;
+                OnPropertyChanged(nameof(backingUp));
+            }
+        }
 
         private int _totalGames;
         public int totalGames
@@ -160,12 +191,24 @@ namespace HanabiCompanion.UI.ViewModels
 
         private async void Backup()
         {
+            isWorking = true;
+            backingUp = true;
+
             await _oneDriveService.BackUp();
+
+            isWorking = false;
+            backingUp = false;
         }
 
         private async void Restore()
         {
+            isWorking = true;
+            restoring = true;
+
             await _oneDriveService.Restore();
+
+            isWorking = false;
+            restoring = false;
         }
 
 

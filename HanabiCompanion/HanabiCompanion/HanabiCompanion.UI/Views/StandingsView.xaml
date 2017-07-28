@@ -14,11 +14,24 @@
             </CommandBar.Content>
         </CommandBar>
 
-        <TextBlock x:Name="rating" 
-                   RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="topCommandBar">
-            <Run Text="{Binding rating}"/>
-            <Run Text="{Binding livesLost}"/>
-        </TextBlock>
+        <Grid x:Name="rating" Margin="12"
+              RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="topCommandBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Ellipse Width="50" Height="50" Fill="{StaticResource PrimaryColourBrush}"/>
+                <TextBlock Text="{Binding totalScore}" Style="{StaticResource TextStyle}" Foreground="White" FontSize="24"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            
+            <Image Grid.Column="0" Source="/Assets/Images/Bomb0.png" Height="50" Width="50" Visibility="{Binding totalScore, Converter={StaticResource zeroToVisibilityConverter}}"/>
+
+            <TextBlock Grid.Column="1" Text="{Binding rating}" Style="{StaticResource TitleTextStyle}" Margin="12,0,0,0"  TextWrapping="Wrap"/>
+        </Grid>
+        
 
         <ScrollViewer x:Name="scrollViewer" ScrollViewer.HorizontalScrollMode="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"
                       RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.Below="rating" RelativePanel.Above="bottomCommandBar">
@@ -29,20 +42,19 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="8,12,12,0" Padding="0,2,0,12" BorderThickness="0,0,0,3" BorderBrush="{StaticResource PrimaryColourBrush}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="75"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             
-                            <TextBlock Text="{Binding name, Mode=TwoWay}" Style="{StaticResource TextStyle}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding name, Mode=TwoWay}" Style="{StaticResource TextStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Margin="12,0,0,0"/>
   
-                            <ListView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding achievements}" Margin="0,8,0,0">
+                            <ListView Grid.Column="1" ItemsSource="{Binding achievements}" Margin="0,8,0,0">
                                 <ListView.ItemContainerStyle>
                                     <StaticResource ResourceKey="NoBorderListViewStyle"/>
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Border BorderBrush="Gray" BorderThickness="0,1,0,0" Margin="24,0,24,0">
                                             <Grid VerticalAlignment="Center" Margin="24,0,24,0">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
@@ -52,7 +64,6 @@
                                                 <TextBlock Grid.Column="1" Text="{Binding title}" Style="{StaticResource TableHeaderTextStyle}"
                                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="12,0,0,0"/>
                                             </Grid>
-                                        </Border>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>

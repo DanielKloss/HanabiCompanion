@@ -105,6 +105,7 @@
     <Compile Include="Converters\ListColourConverter.cs" />
     <Compile Include="Converters\MinusScoreConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Converters\ZeroToVisibilityConverter.cs" />
     <Compile Include="Dialogs\ConfirmDialog.xaml.cs">
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
     </Compile>
@@ -173,6 +174,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\Colours\Blue.png" />
+    <Content Include="Assets\Colours\Green.png" />
+    <Content Include="Assets\Colours\Multi.png" />
+    <Content Include="Assets\Colours\Red.png" />
+    <Content Include="Assets\Colours\White.png" />
+    <Content Include="Assets\Colours\Yellow.png" />
+    <Content Include="Assets\Images\Bomb0.png" />
+    <Content Include="Assets\Images\Bomb1.png" />
+    <Content Include="Assets\Images\Bomb2.png" />
+    <Content Include="Assets\Images\Bomb3.png" />
+    <Content Include="Assets\Logos\noLivesLost.png" />
+    <Content Include="Assets\Logos\globalDown.png" />
+    <Content Include="Assets\Logos\globalUp.png" />
+    <Content Include="Assets\Logos\perfectGame.png" />
+    <Content Include="Assets\Logos\personalDown.png" />
+    <Content Include="Assets\Logos\personalUp.png" />
+    <Content Include="Assets\Logos\milestoneGame.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

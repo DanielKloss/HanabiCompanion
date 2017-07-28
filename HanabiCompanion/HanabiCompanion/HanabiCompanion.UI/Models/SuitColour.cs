@@ -39,7 +39,7 @@
         {
             name = Name;
             score = 0;
-            image = "Assets/Colours/" + Name;
+            image = "/Assets/Colours/" + Name + ".png";
         }
     }
 }

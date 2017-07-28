@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using HanabiCompanion.Data.Models;
 using HanabiCompanion.UI.Dialogs;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace HanabiCompanion.UI.Views
 {

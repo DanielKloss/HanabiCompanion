@@ -33,7 +33,7 @@
             <ListView ItemsSource="{Binding colours}" ItemContainerStyle="{StaticResource NoBorderListViewStyle}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -44,17 +44,13 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Image Height="32" Opacity="0.75" Source="{Binding image}" Margin="24,0,8,0"/>
-                                <TextBlock Text="{Binding name}" Style="{StaticResource TitleTextStyle}" TextAlignment="Center" FontSize="48" Margin="0,0,0,0" TextWrapping="Wrap"/>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,16,0">
+                                <Image Height="100" Source="{Binding image}" Margin="24,0,16,0"/>
+                                <TextBlock Text="{Binding name}" Style="{StaticResource TitleTextStyle}" TextAlignment="Center" VerticalAlignment="Center" FontSize="48" Margin="0,0,0,0" TextWrapping="Wrap"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Button Content="-" CommandParameter="{Binding}" Command="{Binding ElementName=pageRoot, Path=DataContext.minusCommand}" Style="{StaticResource OptionsButton}"/>
-                                <TextBlock Text="{Binding score}" HorizontalAlignment="Center" FontSize="40" Margin="16,0,16,0" TextAlignment="Center"/>
-                                <Button Content="+" CommandParameter="{Binding}" Command="{Binding ElementName=pageRoot, Path=DataContext.plusCommand}" Style="{StaticResource OptionsButton}"/>
-                            </StackPanel>
-                            <Line Grid.Row="1" Grid.ColumnSpan="2" X1="1" X2="250" HorizontalAlignment="Center" Stroke="{StaticResource PrimaryColourBrush}" StrokeThickness="3" Margin="0,8,0,8"/>
+                            <Slider Grid.Row="1" Maximum="5" Minimum="0" Value="{Binding score, Mode=TwoWay}" IsThumbToolTipEnabled="False" TickFrequency="1" SmallChange="1" LargeChange="1" TickPlacement="None" SnapsTo="Ticks" 
+                                    Width="250" Margin="0,32,0,0" Style="{StaticResource ColourScoreSliderStyle}"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -67,9 +63,23 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ToggleButton x:Name="firstBomb" Grid.Column="0" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=firstBomb}" Style="{StaticResource BombButtonStyle}"/>
-            <ToggleButton x:Name="secondBomb" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=secondBomb}" Style="{StaticResource BombButtonStyle}"/>
-            <ToggleButton x:Name="thirdBomb" Grid.Column="2" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=thirdBomb}" Style="{StaticResource BombButtonStyle}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Line Grid.Row="0" Grid.ColumnSpan="3" X1="1" X2="400" HorizontalAlignment="Center" Stroke="{StaticResource PrimaryColourBrush}" StrokeThickness="3" Margin="0,24,0,8"/>
+            <ToggleButton x:Name="firstBomb" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=firstBomb}" Template="{StaticResource BombButtonStyle}"
+                          Height="75" Width="100">
+                <Image Source="/Assets/Images/Bomb3.png"/>
+            </ToggleButton>
+            <ToggleButton x:Name="secondBomb" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=secondBomb}" Template="{StaticResource BombButtonStyle}"
+                          Height="75" Width="100">
+                <Image Source="/Assets/Images/Bomb2.png"/>
+            </ToggleButton>
+            <ToggleButton x:Name="thirdBomb" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Command="{Binding toggleLifeLostCommand}" CommandParameter="{Binding IsChecked, ElementName=thirdBomb}" Template="{StaticResource BombButtonStyle}"
+                          Height="75" Width="100">
+                <Image Source="/Assets/Images/Bomb1.png"/>
+            </ToggleButton>
         </Grid>
     </Grid>
 </Page>

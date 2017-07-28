@@ -35,7 +35,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Image Source="/Assets/Logos/Logo.png" Grid.Column="0" Height="20" Margin="0,4,12,0" VerticalAlignment="Top"/>
+                                    <Image Source="/Assets/Colours/Red.png" Grid.Column="0" Height="20" Margin="0,4,12,0" VerticalAlignment="Top"/>
                                     <TextBlock Text="{Binding}" Grid.Column="1" FontSize="20" TextWrapping="Wrap"/>
                                 </Grid>
                             </DataTemplate>

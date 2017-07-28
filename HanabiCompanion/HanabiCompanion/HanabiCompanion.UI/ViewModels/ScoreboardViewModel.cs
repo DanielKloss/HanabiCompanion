@@ -8,7 +8,6 @@ using SQLite.Net;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -55,34 +54,6 @@ namespace HanabiCompanion.UI.ViewModels
             }
         }
 
-        private ICommand _minusCommand;
-        public ICommand minusCommand
-        {
-            get
-            {
-                if (_minusCommand == null)
-                {
-                    _minusCommand = new Command<SuitColour>(MinusScore, suitColour => suitColour?.score > 0);
-                }
-                return _minusCommand;
-            }
-            set { _minusCommand = value; }
-        }
-
-        private ICommand _plusCommand;
-        public ICommand plusCommand
-        {
-            get
-            {
-                if (_plusCommand == null)
-                {
-                    _plusCommand = new Command<SuitColour>(PlusScore, suitColour => suitColour?.score < 5);
-                }
-                return _plusCommand;
-            }
-            set { _plusCommand = value; }
-        }
-
         private ICommand _toggleLifeLostCommand;
         public ICommand toggleLifeLostCommand
         {
@@ -125,12 +96,6 @@ namespace HanabiCompanion.UI.ViewModels
             set { _cancelGameCommand = value; }
         }
 
-        public void UpdateCommands()
-        {
-            ((Command<SuitColour>)minusCommand).RaiseCanExecuteChanged();
-            ((Command<SuitColour>)plusCommand).RaiseCanExecuteChanged();
-        }
-
         public ScoreboardViewModel(IEnumerable<Player> players)
         {
             _dialogService = new DialogService();
@@ -155,25 +120,13 @@ namespace HanabiCompanion.UI.ViewModels
 
             if (game.multicolour && !game.multiColourIsWild)
             {
-                colours.Add(new SuitColour("Multicolour"));
+                colours.Add(new SuitColour("Multi"));
             }
 
             foreach (Player player in game.players)
             {
                 player.achievements = new ObservableCollection<Achievement>();
             }
-        }
-
-        public void MinusScore(SuitColour colour)
-        {
-            colours[colours.IndexOf(colour)].score--;
-            UpdateCommands();
-        }
-
-        public void PlusScore(SuitColour colour)
-        {
-            colours[colours.IndexOf(colour)].score++;
-            UpdateCommands();
         }
 
         private void toggleLifeLost(bool isChecked)

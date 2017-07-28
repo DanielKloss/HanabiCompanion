@@ -3,46 +3,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
-using HanabiCompanion.UI.Models;
 
 namespace HanabiCompanion.UI
 {
-    public class OneDriveService : TrackPropertyChanged
+    public class OneDriveService
     {
         OneDriveClient client;
-
-        private bool _isWorking;
-        public bool isWorking
-        {
-            get { return _isWorking; }
-            set
-            {
-                _isWorking = value;
-                OnPropertyChanged(nameof(isWorking));
-            }
-        }
-
-        private bool _restoring;
-        public bool restoring
-        {
-            get { return _restoring; }
-            set
-            {
-                _restoring = value;
-                OnPropertyChanged(nameof(restoring));
-            }
-        }
-
-        private bool _backingUp;
-        public bool backingUp
-        {
-            get { return _backingUp; }
-            set
-            {
-                _backingUp = value;
-                OnPropertyChanged(nameof(backingUp));
-            }
-        }
 
         public async Task Authenticate()
         {
