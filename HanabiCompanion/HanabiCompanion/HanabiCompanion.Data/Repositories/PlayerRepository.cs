@@ -107,6 +107,33 @@ namespace HanabiCompanion.Data.Repositories
             }
         }
 
+        public KeyValuePair<string, int> GetHighestScoringColourById(int id)
+        {
+            Dictionary<string, int> colourScores = new Dictionary<string, int>();
+
+            colourScores.Add("Red", connection.Table<PlayerGame>().Where(pg => pg.playerId == id).Sum(c => c.redScore));
+            colourScores.Add("White", connection.Table<PlayerGame>().Where(pg => pg.playerId == id).Sum(c => c.whiteScore));
+            colourScores.Add("Blue", connection.Table<PlayerGame>().Where(pg => pg.playerId == id).Sum(c => c.blueScore));
+            colourScores.Add("Yellow", connection.Table<PlayerGame>().Where(pg => pg.playerId == id).Sum(c => c.yellowScore));
+            colourScores.Add("Green", connection.Table<PlayerGame>().Where(pg => pg.playerId == id).Sum(c => c.greenScore));
+            colourScores.Add("Multi", connection.Table<PlayerGame>().Where(pg => pg.playerId == id).Sum(c => c.multiScore));
+
+            KeyValuePair<string, int> maxScore = colourScores.First();
+
+            for (int i = 0; i < colourScores.Count; i++)
+            {
+                foreach (KeyValuePair<string, int> score in colourScores)
+                {
+                    if (score.Value > maxScore.Value)
+                    {
+                        maxScore = score;
+                    }
+                }
+            }
+
+            return maxScore;
+        }
+
         public int GetNumberOfGamesWithNoLivesLost(int id)
         {
             return connection.Table<PlayerGame>().Where(pg => pg.playerId == id && pg.livesLost == 0).Count();

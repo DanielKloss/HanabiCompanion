@@ -56,7 +56,7 @@
         <Grid x:Name="headers" Margin="8,24,8,0" Padding="4,0,4,4" Background="{StaticResource GreyerPrimaryColourBrush}"
               RelativePanel.Below="overallStats" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -69,12 +69,12 @@
             <TextBlock Text="Stats per player" Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="0" Style="{StaticResource ShadowTextStyle}" FontSize="16" Margin="0,4,0,4"/>
             <TextBlock Text="Player" Grid.Column="0" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" HorizontalAlignment="Left"/>
             <TextBlock Text="Played" Grid.Column="1" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" />
-            <TextBlock Text="Best Score" Grid.Column="2" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" />
-            <TextBlock Text="Worst Score" Grid.Column="3" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" />
-            <TextBlock Text="Average" Grid.Column="4" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" Padding="0,0,12,0" />
+            <TextBlock Text="Best" Grid.Column="2" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" />
+            <TextBlock Text="Worst" Grid.Column="3" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}" />
+            <TextBlock Text="Average" Grid.Column="4" Grid.Row="1" Style="{StaticResource TableHeaderTextStyle}"/>
         </Grid>
 
-        <ScrollViewer Margin="8,0,8,8" Padding="4,0,16,0"
+        <ScrollViewer Margin="8,0,8,8" Padding="4,0,4,0"
                       RelativePanel.Below="headers" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
             <ListView ItemsSource="{Binding playerStats}" ItemContainerStyle="{StaticResource NoBorderListViewStyle}">
                 <ListView.ItemTemplate>

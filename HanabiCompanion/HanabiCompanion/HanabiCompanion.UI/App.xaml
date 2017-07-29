@@ -766,7 +766,7 @@
                     AutomationProperties.AccessibilityView="Raw" />
                 <Grid BorderBrush="{StaticResource PrimaryColourBrush}" BorderThickness="0,0,0,2" Padding="0,8,0,8">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>

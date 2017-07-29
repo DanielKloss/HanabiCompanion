@@ -12,6 +12,7 @@ namespace HanabiCompanion.UI.Models
         public int perfectGames { get; set; }
         public int livesLost { get; set; }
         public double averageScore { get; set; }
+        public string highestColour { get; set; }
 
         public List<Achievement> achievements { get; set; }
     }

@@ -30,18 +30,21 @@
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="32"/>
+                <RowDefinition Height="32"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Total Games:" Grid.Column="0" Grid.Row="0" FontSize="20" HorizontalAlignment="Right"/>
             <TextBlock Text="Best Score:" Grid.Column="0" Grid.Row="1" FontSize="20" HorizontalAlignment="Right"/>
             <TextBlock Text="Worst Score:" Grid.Column="0" Grid.Row="2" FontSize="20" HorizontalAlignment="Right"/>
             <TextBlock Text="Average Score:" Grid.Column="0" Grid.Row="3" FontSize="20" HorizontalAlignment="Right"/>
-            <TextBlock Text="Total Bombs :" Grid.Column="0" Grid.Row="4" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Total Bombs:" Grid.Column="0" Grid.Row="4" FontSize="20" HorizontalAlignment="Right"/>
+            <TextBlock Text="Best Colour:" Grid.Column="0" Grid.Row="5" FontSize="20" HorizontalAlignment="Right"/>
 
             <TextBlock Text="{Binding stats.numberOfGames}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="0"/>
             <TextBlock Text="{Binding stats.bestScore}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="1"/>
             <TextBlock Text="{Binding stats.worstScore}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="2"/>
             <TextBlock Text="{Binding stats.averageScore}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="3"/>
             <TextBlock Text="{Binding stats.livesLost}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="4"/>
+            <TextBlock Text="{Binding stats.highestColour}" FontSize="20" FontWeight="Bold" Grid.Column="2" Grid.Row="5"/>
         </Grid>
 
         <Grid x:Name="headers" Margin="8,24,8,0" Padding="4,0,4,4" Background="{StaticResource GreyerPrimaryColourBrush}"

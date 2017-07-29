@@ -36,7 +36,6 @@
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
@@ -44,7 +43,7 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,16,0">
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
                                 <Image Height="100" Source="{Binding image}" Margin="24,0,16,0"/>
                                 <TextBlock Text="{Binding name}" Style="{StaticResource TitleTextStyle}" TextAlignment="Center" VerticalAlignment="Center" FontSize="48" Margin="0,0,0,0" TextWrapping="Wrap"/>
                             </StackPanel>

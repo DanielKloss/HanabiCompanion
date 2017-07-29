@@ -8,6 +8,7 @@ using SQLite.Net;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -171,9 +172,17 @@ namespace HanabiCompanion.UI.ViewModels
             {
                 _gameRepo.AddGame(game);
 
+                int multiScore = colours.SingleOrDefault(c => c.name == "Multi")?.score ?? 0;
+
                 foreach (Player player in game.players)
                 {
-                    _playerGameRepo.AddPlayerGame(player, game);
+                    _playerGameRepo.AddPlayerGame(player, game, 
+                        colours.SingleOrDefault(c => c.name == "Red").score,
+                        colours.SingleOrDefault(c => c.name == "White").score,
+                        colours.SingleOrDefault(c => c.name == "Blue").score,
+                        colours.SingleOrDefault(c => c.name == "Yellow").score,
+                        colours.SingleOrDefault(c => c.name == "Green").score,
+                        multiScore);
                 }
 
                 achievementService.CheckForFirsts();

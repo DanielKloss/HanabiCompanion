@@ -176,6 +176,8 @@ namespace HanabiCompanion.UI.ViewModels
             {
                 foreach (Player player in _playerRepo.GetAllPlayers())
                 {
+                    KeyValuePair<string, int> colour = _playerRepo.GetHighestScoringColourById(player.id);
+
                     playerStats.Add(new PlayerStat
                     {
                         name = player.name,
@@ -185,6 +187,7 @@ namespace HanabiCompanion.UI.ViewModels
                         averageScore = _playerRepo.GetAverageScoreById(player.id),
                         perfectGames = _playerRepo.GetNumberOfPerfectGames(player.id),
                         livesLost = _playerRepo.GetNumberOfLivesLost(player.id),
+                        highestColour = colour.Key + " (" + colour.Value + ")",
                         achievements = new List<Achievement>(_achievementRepo.GetAchievementsById(player.id))
                     });
                 }
